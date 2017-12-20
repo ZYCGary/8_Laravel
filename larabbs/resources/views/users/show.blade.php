@@ -15,11 +15,11 @@
                         </div>
                         <div class="media-body">
                             <hr>
-                            <h4><strong>Profile</strong></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                            <h4><strong>Introduction</strong></h4>
+                            <p>{{ $user->introduction }}</p>
                             <hr>
                             <h4><strong>Registered on</strong></h4>
-                            <p>January 01 1901</p>
+                            <p>{{ $user->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
                 </div>
