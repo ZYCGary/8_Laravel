@@ -11,12 +11,24 @@
                 <div class="panel-body">
                     <div class="media">
                         <div align="center">
-                            <img class="thumbnail img-responsive" src="{{ $user->avatar }}" width="300px" height="300px">
+                            @if($user->avatar)
+                                <img class="thumbnail img-responsive" src="{{ $user->avatar }}" width="300px" height="300px">
+                            @else
+                                <img class="thumbnail img-responsive"
+                                     src="https://fsdhubcdn.phphub.org/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/600/h/600"
+                                     width="300px" height="300px">
+                            @endif
                         </div>
                         <div class="media-body">
                             <hr>
                             <h4><strong>Introduction</strong></h4>
-                            <p>{{ $user->introduction }}</p>
+                            <p>
+                                @if($user->introduction)
+                                    {{ $user->introduction }}
+                                @else
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                @endif
+                            </p>
                             <hr>
                             <h4><strong>Registered on</strong></h4>
                             <p>{{ $user->created_at->diffForHumans() }}</p>
@@ -29,7 +41,8 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                 <span>
-                    <h1 class="panel-title pull-left" style="font-size:30px;">{{ $user->name }} <small>{{ $user->email }}</small></h1>
+                    <h1 class="panel-title pull-left" style="font-size:30px;">{{ $user->name }}
+                        <small>{{ $user->email }}</small></h1>
                 </span>
                 </div>
             </div>
