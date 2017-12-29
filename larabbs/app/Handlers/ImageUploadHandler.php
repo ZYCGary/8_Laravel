@@ -55,30 +55,32 @@ class ImageUploadHandler
         $width = $image->width();
         $height = $image->height();
 
-        if ($width < $height) {
-            // 进行大小调整的操作
-            $image->resize($max_width, null, function (Constraint $constraint) {
+        if ($width > $max_width || $height > $max_width) {
+            if ($width < $height) {
+                // 进行大小调整的操作
+                $image->resize($max_width, null, function (Constraint $constraint) {
 
-                // 设定宽度是 $max_width，高度等比例双方缩放
-                $constraint->aspectRatio();
+                    // 设定宽度是 $max_width，高度等比例双方缩放
+                    $constraint->aspectRatio();
 
-                // 防止裁图时图片尺寸变大
-                $constraint->upsize();
-            });
-        } else {
-            // 进行大小调整的操作
-            $image->resize(null, $max_width, function (Constraint $constraint) {
+                    // 防止裁图时图片尺寸变大
+                    $constraint->upsize();
+                });
+            } else {
+                // 进行大小调整的操作
+                $image->resize(null, $max_width, function (Constraint $constraint) {
 
-                // 设定宽度是 $max_width，高度等比例双方缩放
-                $constraint->aspectRatio();
+                    // 设定宽度是 $max_width，高度等比例双方缩放
+                    $constraint->aspectRatio();
 
-                // 防止裁图时图片尺寸变大
-                $constraint->upsize();
-            });
+                    // 防止裁图时图片尺寸变大
+                    $constraint->upsize();
+                });
+            }
+
+            // 截取图片中心固定大小
+            $image->resizeCanvas($max_width, $max_width);
         }
-
-        // 截取图片中心固定大小
-        $image->resizeCanvas($max_width, $max_width);
 
         // 对图片修改后进行保存
         $image->save();
